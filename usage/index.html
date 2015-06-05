@@ -67,6 +67,12 @@
                 
                     <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
                 
+                    <li><a class="toctree-l4" href="#command">Command</a></li>
+                
+                    <li><a class="toctree-l4" href="#defining-keymaps">Defining Keymaps</a></li>
+                
+                    <li><a class="toctree-l4" href="#settings">Settings</a></li>
+                
             
             </ul>
         
@@ -124,11 +130,40 @@
             <div class="section">
               
                 <h1 class="doctitle" id="user-guide"><a name="user-content-user-guide" href="#user-guide" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>User Guide</h1>
-<p>Configuration and usage of SubNotify.</p>
+<p>Configuration and usage of FindCursor.</p>
 <hr />
 <h2 id="getting-started"><a name="user-content-getting-started" href="#getting-started" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Getting Started</h2>
-<p>Create a command and define its search direction and whether you will use the pan feature or the default cursor iteration feature.</p>
-<p>Example Keymap:<br />
+<p>Find cursor provides only one command, and it works best when bound to a shortcut.  Simply setup a <a href="#defining-keymaps">keymap</a> and you are ready to go.  Though if you prefer, you can add commands in the command palette, or menus.</p>
+<h2 id="command"><a name="user-content-command" href="#command" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Command</h2>
+<dl>
+<dt>find_cursor</dt>
+<dd>
+<p>When the command is first invoked, all cursors will turn to block cursors and blink making them highly visible.  Subsequent invocations (if performed before timeout) will cycle through the cursors focusing them in the view.  The focus modes are iterative (the default) and pan mode.  Pan mode will pan the view to the next available region that has cursors not already visible in the view.</p>
+<table>
+<thead>
+<tr>
+<th>Parameters</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reverse</td>
+<td>bool</td>
+<td>Controls the direction of cursor focusing when either iterating or panning through cursors.</td>
+</tr>
+<tr>
+<td>pan</td>
+<td>bool</td>
+<td>Controls whether the command will run in pan mode or iterative mode.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<h2 id="defining-keymaps"><a name="user-content-defining-keymaps" href="#defining-keymaps" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Defining Keymaps</h2>
+<p>Setting up commands is basically the same for either pan or iterative commands.  The command can be bound in a forward or reverse direction and in iterative or pan mode.  It is usually useful to bind both forward and reverse variants for easier cursor navigation.</p>
 <div class="codehilite"><pre>    <span class="c1">//////////////////////////////////</span>
     <span class="c1">// Find Cursor: Iterative Find</span>
     <span class="c1">//////////////////////////////////</span>
@@ -142,8 +177,10 @@
         <span class="s2">&quot;command&quot;</span><span class="o">:</span> <span class="s2">&quot;find_cursor&quot;</span><span class="p">,</span>
         <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;reverse&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;pan&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">}</span>
     <span class="p">}</span>
+</pre></div>
 
-    <span class="c1">//////////////////////////////////</span>
+
+<div class="codehilite"><pre>    <span class="c1">//////////////////////////////////</span>
     <span class="c1">// Find Cursor: Panning Find</span>
     <span class="c1">//////////////////////////////////</span>
     <span class="p">{</span>
@@ -157,7 +194,16 @@
         <span class="s2">&quot;args&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;reverse&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;pan&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
     <span class="p">}</span>
 </pre></div>
-</p>
+
+
+<h2 id="settings"><a name="user-content-settings" href="#settings" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Settings</h2>
+<p>There is currently only one setting that can be used in FindCursor.</p>
+<h3 id="find_mode_timeout"><a name="user-content-find_mode_timeout" href="#find_mode_timeout" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>find_mode_timeout</h3>
+<p><code>find_mode_timeout</code> controls how long after each command invocation that navigating through cursors will be allowed.  After the time out is reached, the cursors return to normal mode and the next invocation will only make them highly visible again.</p>
+<div class="codehilite"><pre>    <span class="c1">// How long before find mode times out</span>
+    <span class="c1">// and cursors return to normal</span>
+    <span class="s2">&quot;find_mode_timeout&quot;</span><span class="o">:</span> <span class="mi">3000</span>
+</pre></div>
               
             </div>
           </div>
